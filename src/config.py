@@ -109,14 +109,20 @@ SOIL_FALLBACK = 3
 # ------------------------------------------------------------------
 # land-cover code : (soil A, soil B, soil C, soil D)
 # This table lives only here - no CSV file is needed.
+#
+# Water (1) and Snow / ice (9) are deliberately NOT in this table.
+# SCS-CN describes rain falling on LAND. A river or lake is where runoff
+# ends up, not a surface that generates it, so giving it CN = 98 made
+# the river look like a runoff hotspot. A land-cover code that is missing
+# here gets no CN, so those pixels are left empty (transparent) on the
+# runoff maps and are ignored in the runoff statistics. They still show
+# on the land-cover map and in the area charts.
 CN_TABLE = {
-    1:  (98, 98, 98, 98),     # Water
     2:  (36, 60, 73, 79),     # Trees
     4:  (68, 79, 86, 89),     # Flooded vegetation
     5:  (67, 78, 85, 89),     # Crops
     7:  (77, 85, 90, 92),     # Built-up
     8:  (77, 86, 91, 94),     # Bare ground
-    9:  (98, 98, 98, 98),     # Snow / ice
     11: (49, 69, 79, 84),     # Rangeland
 }
 
