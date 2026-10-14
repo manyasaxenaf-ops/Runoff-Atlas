@@ -229,18 +229,13 @@ VALID_LULC_CODES = filter_valid_codes()
 # ------------------------------------------------------------------
 st.sidebar.header("🎛️ Analysis Controls")
 
-rain_source = st.sidebar.radio(
-    "Rainfall Used",
-    ["Same storm for both years (slider)", "Rainfall raster of each year"],
-    help="The slider isolates land-cover change impact. Selecting raster files combines LULC change with rainfall variation.",
+# One storm depth is applied to every year (2017, 2025 and 2035), so any
+# difference in runoff comes only from land-cover change.
+P_slider = st.sidebar.slider(
+    "Storm Rainfall P (mm/day)", 10, 300, 100, 5,
+    help="The same storm is applied to every year, so differences come only from land-cover change.",
 )
-
-if rain_source.startswith("Same"):
-    P_slider = st.sidebar.slider("Storm Rainfall P (mm/day)", 10, 300, 100, 5)
-    P0 = P1 = PF = float(P_slider)
-else:
-    P0, P1 = rain[Y0], rain[Y1]
-    PF = rain[Y1]
+P0 = P1 = PF = float(P_slider)
 
 layer = st.sidebar.selectbox(
     "Map Layer",
